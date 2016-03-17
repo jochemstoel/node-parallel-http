@@ -51,17 +51,17 @@ var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
     req.end();
 });
 
-function crawlerOnePage(numero, getInfos, traiterPag, cbFinal) {
+function processOnePage(numero, getInfos, processPageData, cbFinal) {
     getInfos(numero)
         .then(Promise.denodeify(function(infos, cbFinall) {
             if (infos.sites.length === 0) {
                 cbFinal(null, "fini");
             } else {
-                traiterInfo(infos, getInfos, traiterPag, cbFinall);
+                traiterInfo(infos, getInfos, processPageData, cbFinall);
             }
         }))
         .then(function() {
-            crawlerOnePage(numero, getInfos, traiterPag, cbFinal);
+            processOnePage(numero, getInfos, processPageData, cbFinal);
 
         });
 }
@@ -88,26 +88,26 @@ function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
         });
 }
 
-function createListParallelCurl(nombreSimulatenee, getInfosFunction, traiterPageFunction) {
-    var getInfosPromise = Promise.denodeify(getInfosFunction);
-    var traiterPagePromise = Promise.denodeify(traiterPageFunction);
+function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction) {
+    var getInfosPromise    = Promise.denodeify(getInfosFunction);
+    var processPagePromise = Promise.denodeify(processPageFunction);
 
-    var ret = [];
-    for (var i = 0; i < nombreSimulatenee; i++) {
-        ret[ret.length] = function(i) {
+    var listParellelCurl = [];
+    for (var curlIndex = 0 ; curlIndex < simultaneousCurl ; curlIndex++) {
+        listParellelCurl[listParellelCurl.length] = function(curlIndex) {
             return function(callback) {
-                crawlerOnePage(i, getInfosPromise, traiterPagePromise, function(err, texte) {
-                    callback(null, i + " " + texte);
+                processOnePage(curlIndex, getInfosPromise, processPagePromise, function(err, texte) {
+                    callback(null, curlIndex + " " + texte);
                 });
             };
-        }(i);
+        }(curlIndex);
     }
-    return ret;
+    return listParellelCurl;
 }
 
 function start(simultaneousCurl, getInfosFunction, processPageFunction, isProxy,cb) {
     
-    http  = selectHttpEngine(isProxy)
+    http  = selectHttpEngine(isProxy);
 
     var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);  
     
