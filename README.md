@@ -26,7 +26,7 @@ Some introduction [with link](http://google.fr).
 You will can install synaptic with [npm](https://www.npmjs.com/package/node-parallel-http):
 
 ```cmd
-npm install npm i node-parallel-http --save
+npm install node-parallel-http --save
 ```
 
 #####In the browser

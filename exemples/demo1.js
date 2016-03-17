@@ -2,7 +2,7 @@ var crawler = require('../dist/node-parallel-http.min.js');
 
 function getInfos(numeroCrawler,cb) {
     var sites = [{
-        url: 'http://www.this-page-intentionally-left-blank.org',
+        url: 'www.this-page-intentionally-left-blank.org',
         path: '/',
         isValid: function(codeSource) {
               return (codeSource.indexOf("que vous voyez ci-dessous") <= -1);
@@ -25,4 +25,4 @@ function traiterPage(page, info, cb) {
     console.log(page);
     cb(null, info);
 }
-crawler(8,getInfos,traiterPage,true);
+crawler(8,getInfos,traiterPage,false);
