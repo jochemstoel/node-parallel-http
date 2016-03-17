@@ -39,27 +39,35 @@ Just include the file synaptic.js from `/dist` directory with a script tag in yo
 ###Usage
 
 ```javascript
-var crawler= require('crawler'); // this line is not needed in the browser
+var parallelHttp = require('../dist/node-parallel-http.min.js');
+
 function getInfos(numeroCrawler,cb) {
     var sites = [{
-        url: 'www.amazon.fr',
+        url: 'www.this-page-intentionally-left-blank.org',
         path: '/',
         isValid: function(codeSource) {
-              return (codeSource.indexOf("que vous voyez ci-dessous") <= -1);
+              return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);
         }
     }];
+
     var infos = {
         sites: sites,
-        pageIndex: 0
+        pageIndex: 0,
+        numeroCrawler : numeroCrawler
     };
 
     cb(null, infos);
 }
+
+var begin = new Date().getTime();
+
+
 function traiterPage(page, info, cb) {
 	console.log(page);
-	cb(null, info);
+    cb(null, info);
 }
-crawler(8,getInfos,traiterPage,true);
+parallelHttp(8,getInfos,traiterPage,false);
+
 ```
 
 Now you can start to have parallel request .

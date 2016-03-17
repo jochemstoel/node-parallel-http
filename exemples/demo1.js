@@ -1,4 +1,4 @@
-var crawler = require('../dist/node-parallel-http.min.js');
+var parallelHttp = require('../dist/node-parallel-http.min.js');
 
 var nbPageParcouru = 0;
 var dateDepart = Date.now();
@@ -31,4 +31,4 @@ function traiterPage(page, info, cb) {
     }
     cb(null, info);
 }
-crawler(8,getInfos,traiterPage,false);
+parallelHttp(8,getInfos,traiterPage,false);
