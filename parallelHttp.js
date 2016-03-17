@@ -52,8 +52,14 @@ var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
 });
 
 function processOnePage(numero, getInfos, processPageData, cbFinal) {
+
     getInfos(numero)
         .then(Promise.denodeify(function(infos, cbFinall) {
+            if (!infos) {
+                console.log("il n y a pas d'info")
+            } else if (!infos.sites) {
+                console.log("il n y a pas de site dans infos")
+            }
             if (infos.sites.length === 0) {
                 cbFinal(null, "fini");
             } else {
