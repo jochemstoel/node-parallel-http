@@ -22,13 +22,13 @@ gulp.task('beautify', function() {
 
 gulp.task('minifyjs', function () {
    gulp.src('./index.js')
-    .pipe(renameGulp("crawler.min.js"))
+    .pipe(renameGulp("node-parallel-http.min.js"))
     .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 gulp.task('build', function () {
    gulp.src('./index.js')
-    .pipe(renameGulp("crawler.js"))
+    .pipe(renameGulp("node-parallel-http.js"))
     .pipe(gulp.dest('./dist'));
 });
 
