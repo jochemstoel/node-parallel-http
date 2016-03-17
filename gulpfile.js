@@ -24,12 +24,12 @@ gulp.task('minifyjs', function () {
    gulp.src('./index.js')
     .pipe(renameGulp("crawler.min.js"))
     .pipe(uglify())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./dist'));
 });
 
 
 
 
-gulp.task('build',
+gulp.task('default',
 	 runSequence('beautify','minifyjs')
 );
