@@ -56,12 +56,12 @@ function processOnePage(numero, getInfos, processPageData, cbFinal) {
     getInfos(numero)
     .then(Promise.denodeify(function(infos, cbFinall) {
         if(!infos) {
-            console.log("il n y a pas d'info")
+            throw new Error("no info");
         }else if(!infos.sites){
-            console.log("il n y a pas de site dans infos")
+             throw new Error("no site in info")
         }
         if (infos.sites.length === 0) {
-            cbFinal(null, "fini");
+            cbFinal(null, "Finish");
         } else {
             traiterInfo(infos, getInfos, processPageData, cbFinall);
         }
@@ -69,8 +69,12 @@ function processOnePage(numero, getInfos, processPageData, cbFinal) {
     .then(function() {
         processOnePage(numero, getInfos, processPageData, cbFinal);
 
+    }).catch(function(err){
+        console.log("Err: " + err);
+        cbFinal("Err: " + err,null);
     });
 }
+
 
 function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
 
