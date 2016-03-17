@@ -23,5 +23,16 @@
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0",
     "run-sequence": "^1.1.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucasBertola/node-parallel-http"
+  },
+  "keywords": [
+    "http",
+    "https",
+    "tor",
+    "parallel",
+    "fast"
+  ],
 }
