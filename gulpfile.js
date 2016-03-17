@@ -26,10 +26,15 @@ gulp.task('minifyjs', function () {
     .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
+gulp.task('build', function () {
+   gulp.src('./index.js')
+    .pipe(renameGulp("crawler.js"))
+    .pipe(gulp.dest('./dist'));
+});
 
 
 
 
 gulp.task('default',
-	 runSequence('beautify','minifyjs')
+	 runSequence('beautify','build','minifyjs')
 );
