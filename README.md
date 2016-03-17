@@ -1,7 +1,7 @@
 Node-Parallel-HTTP
 ========
 
-Node-Parallel-HTTP is a Javascript for make  **lot of different request** in simultaneous. It can use HTTP, HTTPS. It work with socks5 proxy for, exemple, use **TOR NETWORK**.
+Node-Parallel-HTTP is a Javascript for make  **lot of different request** in simultaneous. It can use HTTP, HTTPS. It works with socks5 proxy for, exemple, use **TOR NETWORK**.
 
 ####Introduction
 
@@ -82,7 +82,7 @@ This is how you can create a simple **crawler**:
 ![perceptron](http://engineering.naukri.com/wp-content/uploads/sites/19/2015/12/spider-web-crawl-featured.jpg).
 
 ```javascript
-function function()
+function functionTest()
 {
 }
 
