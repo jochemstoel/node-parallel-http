@@ -6,7 +6,7 @@ var nbPageParcouru = 0;
 function getInfos(numeroCrawler,cb) {
     var sites = [{
         url: 'www.amazon.fr',
-        path: '/gp/aw/search/ref=sr_adv_d/?__mk_fr_FR=%C5M%C5Z%D5%D1&search-alias=stripbooks&sort=relevancerank&page=1&low-price=2&high-price=2',
+        path: '/',
         isValid: function(codeSource) {
               return (codeSource.indexOf("que vous voyez ci-dessous") <= -1);
         }
