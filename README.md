@@ -108,7 +108,7 @@ This is how you can create a simple **crawler**:
 ![perceptron](http://engineering.naukri.com/wp-content/uploads/sites/19/2015/12/spider-web-crawl-featured.jpg).
 
 ```javascript
-function function()
+function functionTest()
 {
 }
 

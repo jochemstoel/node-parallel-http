@@ -106,16 +106,17 @@ function creationListeCrawler(nombreSimulatenee, getInfosFunction, traiterPageFu
     return ret;
 }
 
-function lancementCrawler(nombreSimulatenee, getInfosFunction, traiterPageFunction, proxy) {
+function start(simultaneousCurl, getInfosFunction, traiterPageFunction, proxy) {
     if (typeof proxy === 'undefined' || !proxy) {
         http = require("http");
     } else {
         http = require("socks5-http-client");
     }
 
-
-    var listFunction = creationListeCrawler(nombreSimulatenee, getInfosFunction, traiterPageFunction);
-
+    var listFunction = creationListeCrawler(simultaneousCurl, getInfosFunction, traiterPageFunction);
+ /*   for(var i = 0 ; i < listFunction.length ; i++) {
+        listFunction[i]();
+    }*/
     async.parallel(
         listFunction,
         function(err, results) {
@@ -124,4 +125,4 @@ function lancementCrawler(nombreSimulatenee, getInfosFunction, traiterPageFuncti
 }
 
 
-module.exports = lancementCrawler;
+module.exports = start;

@@ -114,9 +114,9 @@ function start(simultaneousCurl, getInfosFunction, traiterPageFunction, proxy) {
     }
 
     var listFunction = creationListeCrawler(simultaneousCurl, getInfosFunction, traiterPageFunction);
- /*   for(var i = 0 ; i < listFunction.length ; i++) {
-        listFunction[i]();
-    }*/
+    /*   for(var i = 0 ; i < listFunction.length ; i++) {
+           listFunction[i]();
+       }*/
     async.parallel(
         listFunction,
         function(err, results) {
