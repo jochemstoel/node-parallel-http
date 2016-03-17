@@ -23,17 +23,17 @@ Some introduction [with link](http://google.fr).
 ###Installation
 
 #####In node
-You will can install synaptic with [npm](http://npmjs.org):
+You will can install synaptic with [npm](https://www.npmjs.com/package/node-parallel-http):
 
 ```cmd
-npm install ... --save
+npm install npm i node-parallel-http --save
 ```
 
 #####In the browser
 Just include the file synaptic.js from `/dist` directory with a script tag in your HTML:
 
 ```html
-<script src="malib.min.js"></script>
+<script src="node-parallel-http.min.js"></script>
 ```
 
 ###Usage

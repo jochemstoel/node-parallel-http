@@ -1,7 +1,7 @@
 {
   "name": "node-parallel-http",
-  "version": "1.0.0",
-  "description": "",
+  "version": "v0.1.0",
+  "description": "Node-parallel-http",
   "main": "dist/node-parallel-http.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,5 +34,5 @@
     "tor",
     "parallel",
     "fast"
-  ],
+  ]
 }

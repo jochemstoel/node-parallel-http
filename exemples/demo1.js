@@ -1,21 +1,13 @@
-var crawler = require('./index.js');
-
-
-var nbPageParcouru = 0;
+var crawler = require('../dist/node-parallel-http.min.js');
 
 function getInfos(numeroCrawler,cb) {
     var sites = [{
-        url: 'www.amazon.fr',
+        url: 'http://www.this-page-intentionally-left-blank.org',
         path: '/',
         isValid: function(codeSource) {
               return (codeSource.indexOf("que vous voyez ci-dessous") <= -1);
         }
     }];
-
-    if (nbPageParcouru >= 100000) {
-        sites = [];
-    }
-
 
     var infos = {
         sites: sites,
@@ -30,11 +22,7 @@ var begin = new Date().getTime();
 
 
 function traiterPage(page, info, cb) {
-    nbPageParcouru++;
-    var actuel = new Date().getTime() - begin;
-    actuel /= 1000;
-    console.log(nbPageParcouru / actuel);
-    console.log(nbPageParcouru);
+    console.log(page);
     cb(null, info);
 }
 crawler(8,getInfos,traiterPage,true);
