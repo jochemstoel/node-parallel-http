@@ -9,25 +9,25 @@ var runSequence = require('run-sequence');
 
 
 gulp.task('jshint', function() {
-  return gulp.src('./index.js')
+  return gulp.src('./src/index.js')
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('beautify', function() {
-  gulp.src('./index.js')
+  gulp.src('./src/index.js')
     .pipe(beautify({indentSize: 2}))
     .pipe(gulp.dest('.'))
 });
 
 gulp.task('minifyjs', function () {
-   gulp.src('./index.js')
+   gulp.src('./src/index.js')
     .pipe(renameGulp("node-parallel-http.min.js"))
     .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 gulp.task('build', function () {
-   gulp.src('./index.js')
+   gulp.src('./src/index.js')
     .pipe(renameGulp("node-parallel-http.js"))
     .pipe(gulp.dest('./dist'));
 });
