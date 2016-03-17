@@ -1,7 +1,6 @@
-var async = require("async");
+var async   = require("async");
 var Promise = require("promise");
-var http = require("http");
-
+var http;
 
 function callbackHttp(response, cb) {
     var str = '';
@@ -89,7 +88,7 @@ function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
         });
 }
 
-function creationListeCrawler(nombreSimulatenee, getInfosFunction, traiterPageFunction) {
+function createListParallelCurl(nombreSimulatenee, getInfosFunction, traiterPageFunction) {
     var getInfosPromise = Promise.denodeify(getInfosFunction);
     var traiterPagePromise = Promise.denodeify(traiterPageFunction);
 
@@ -106,22 +105,26 @@ function creationListeCrawler(nombreSimulatenee, getInfosFunction, traiterPageFu
     return ret;
 }
 
-function start(simultaneousCurl, getInfosFunction, traiterPageFunction, proxy) {
-    if (typeof proxy === 'undefined' || !proxy) {
-        http = require("http");
-    } else {
-        http = require("socks5-http-client");
-    }
+function start(simultaneousCurl, getInfosFunction, processPageFunction, isProxy,cb) {
+    
+    http  = selectHttpEngine(isProxy)
 
-    var listFunction = creationListeCrawler(simultaneousCurl, getInfosFunction, traiterPageFunction);
- /*   for(var i = 0 ; i < listFunction.length ; i++) {
-        listFunction[i]();
-    }*/
-    async.parallel(
-        listFunction,
-        function(err, results) {
-            console.log(results);
-        });
+    var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);  
+    
+    launchEachCurlParallel(curlsFunction,cb);
+}
+
+function launchEachCurlParallel(curlsFunction,cb){
+    async.parallel(curlsFunction,cb);
+}
+
+function selectHttpEngine(isProxy) {
+    //TODO HTTPS
+    if (typeof isProxy === 'undefined' || !isProxy) {
+        return require("http");
+    } else {
+        return require("socks5-http-client");
+    }
 }
 
 

@@ -31,4 +31,4 @@ function traiterPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(8,getInfos,traiterPage,false);
+parallelHttp(8,getInfos,traiterPage,false,function(erreurs,results){});

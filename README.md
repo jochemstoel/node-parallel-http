@@ -23,14 +23,14 @@ Some introduction [with link](http://google.fr).
 ###Installation
 
 #####In node
-You will can install ode-parallel-http with [npm](https://www.npmjs.com/package/node-parallel-http):
+You will can install node-parallel-http with [npm](https://www.npmjs.com/package/node-parallel-http):
 
 ```cmd
 npm install node-parallel-http --save
 ```
 
 #####In the browser
-Just include the file ode-parallel-http.js from `/dist` directory with a script tag in your HTML:
+Just include the file node-parallel-http.js from `/dist` directory with a script tag in your HTML:
 
 ```html
 <script src="node-parallel-http.min.js"></script>
