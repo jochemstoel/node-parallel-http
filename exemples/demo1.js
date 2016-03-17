@@ -1,11 +1,13 @@
 var crawler = require('../dist/node-parallel-http.min.js');
 
+var nbPageParcouru = 0;
+var dateDepart = Date.now();
 function getInfos(numeroCrawler,cb) {
     var sites = [{
         url: 'www.this-page-intentionally-left-blank.org',
         path: '/',
         isValid: function(codeSource) {
-              return (codeSource.indexOf("que vous voyez ci-dessous") <= -1);
+              return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);
         }
     }];
 
@@ -22,7 +24,11 @@ var begin = new Date().getTime();
 
 
 function traiterPage(page, info, cb) {
-    console.log(page);
+    nbPageParcouru++;
+    if(nbPageParcouru%100 ==0){
+        var time = Date.now()-dateDepart;
+        console.log(Math.round((nbPageParcouru/time)*1000)+" req / s");
+    }
     cb(null, info);
 }
 crawler(8,getInfos,traiterPage,false);
