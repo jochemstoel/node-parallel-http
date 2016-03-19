@@ -116,16 +116,33 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
 }
 
 function start(simultaneousCurl, getInfosFunction, processPageFunction, isProxy, cb) {
+    return new Promise(function(resolve, reject) {
 
-    http = selectHttpEngine(isProxy);
+        http = selectHttpEngine(isProxy);
 
-    var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);
+        var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);
 
-    launchEachCurlParallel(curlsFunction, cb);
+        launchEachCurlParallel(curlsFunction)
+            .then(function(resultat) {
+                resolve(resultat);
+            })
+            .catch(function(err) {
+                reject(err);
+            });
+    });
+
 }
 
-function launchEachCurlParallel(curlsFunction, cb) {
-    async.parallel(curlsFunction, cb);
+function launchEachCurlParallel(curlsFunction) {
+    return new Promise(function(resolve, reject) {
+        asyncParallel = Promise.denodeify(async.parallel);
+        asyncParallel(curlsFunction)
+            .then(function(result) {
+                resolve(result);
+            }).catch(function(err) {
+                reject(err);
+            });
+    });
 }
 
 function selectHttpEngine(isProxy) {

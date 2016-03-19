@@ -52,20 +52,20 @@ var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
 });
 
 function processOnePage(numero, getInfos, processPageData, cbFinal) {
- 
+
     getInfos(numero)
     .then(Promise.denodeify(function(infos, cbFinall) {
         if(!infos) {
             throw new Error("no info");
         }else if(!infos.sites){
-             throw new Error("no site in info")
-        }
-        if (infos.sites.length === 0) {
-            cbFinal(null, "Finish");
-        } else {
-            traiterInfo(infos, getInfos, processPageData, cbFinall);
-        }
-    }))
+           throw new Error("no site in info")
+       }
+       if (infos.sites.length === 0) {
+        cbFinal(null, "Finish");
+    } else {
+        traiterInfo(infos, getInfos, processPageData, cbFinall);
+    }
+}))
     .then(function() {
         processOnePage(numero, getInfos, processPageData, cbFinal);
 
@@ -80,22 +80,22 @@ function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
 
 
     getPage(infos)
-        .then(Promise.denodeify(function(pageAndInfo, cb1) {
-            var info = pageAndInfo[1];
-            if (!info.sites[info.pageIndex - 1].isValid(pageAndInfo[0])) {
-                info.pageIndex--;
-                traiterInfo(info, getInfos, traiterPageP, cbFinal);
-            } else {
-                traiterPageP(pageAndInfo[0], pageAndInfo[1], cb1);
-            }
-        }))
-        .then(function(info, cb2) {
-            if (info.pageIndex == info.sites.length) {
-                cbFinal(null, null);
-            } else {
-                traiterInfo(info, getInfos, traiterPageP, cbFinal);
-            }
-        });
+    .then(Promise.denodeify(function(pageAndInfo, cb1) {
+        var info = pageAndInfo[1];
+        if (!info.sites[info.pageIndex - 1].isValid(pageAndInfo[0])) {
+            info.pageIndex--;
+            traiterInfo(info, getInfos, traiterPageP, cbFinal);
+        } else {
+            traiterPageP(pageAndInfo[0], pageAndInfo[1], cb1);
+        }
+    }))
+    .then(function(info, cb2) {
+        if (info.pageIndex == info.sites.length) {
+            cbFinal(null, null);
+        } else {
+            traiterInfo(info, getInfos, traiterPageP, cbFinal);
+        }
+    });
 }
 
 function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction) {
@@ -116,16 +116,33 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
 }
 
 function start(simultaneousCurl, getInfosFunction, processPageFunction, isProxy,cb) {
-    
-    http  = selectHttpEngine(isProxy);
+    return new Promise(function (resolve, reject) {
 
-    var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);  
-    
-    launchEachCurlParallel(curlsFunction,cb);
+        http  = selectHttpEngine(isProxy);
+
+        var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);  
+
+        launchEachCurlParallel(curlsFunction)
+        .then(function(resultat){
+            resolve(resultat);
+        })
+        .catch(function(err){
+            reject(err);
+        });
+    });
+
 }
 
-function launchEachCurlParallel(curlsFunction,cb){
-    async.parallel(curlsFunction,cb);
+function launchEachCurlParallel(curlsFunction){
+    return new Promise(function (resolve, reject) {
+        asyncParallel =  Promise.denodeify(async.parallel);
+        asyncParallel(curlsFunction)
+        .then(function(result){
+            resolve(result);
+        }).catch(function(err){
+            reject(err);
+        });
+    });    
 }
 
 function selectHttpEngine(isProxy) {

@@ -35,6 +35,7 @@ function traiterPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(8,getInfos,traiterPage,false,function(erreurs,results){
-    console.log("resultat");
-});
+parallelHttp(8,getInfos,traiterPage,false)
+    .then(function(result){
+        console.log(result)
+    })
