@@ -11,6 +11,10 @@ function getInfos(numeroCrawler,cb) {
         }
     }];
 
+    if(nbPageParcouru>300) {
+        sites = [] ;
+    }
+
     var infos = {
         sites: sites,
         pageIndex: 0,
@@ -31,4 +35,6 @@ function traiterPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(8,getInfos,traiterPage,false,function(erreurs,results){});
+parallelHttp(8,getInfos,traiterPage,false,function(erreurs,results){
+    console.log("resultat");
+});
