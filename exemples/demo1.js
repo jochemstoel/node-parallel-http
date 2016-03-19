@@ -11,7 +11,7 @@ function getInfos(numeroCrawler,cb) {
         }
     }];
 
-    if(nbPageParcouru>300) {
+    if(nbPageParcouru>10000) {
         sites = [] ;
     }
 
@@ -35,7 +35,7 @@ function traiterPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(8,getInfos,traiterPage,false)
+parallelHttp(50,getInfos,traiterPage,false)
     .then(function(result){
         console.log(result)
     })
