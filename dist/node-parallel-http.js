@@ -2,54 +2,7 @@ var async   = require("async");
 var Promise = require("promise");
 var http;
 
-function callbackHttp(response, cb) {
-    var str = '';
-    response.on('data', function(chunk) {
-        str += chunk;
-    });
 
-    response.on('end', function() {
-        cb(null, str);
-    });
-
-}
-
-var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
-
-    if (typeof infos.pageIndex === 'undefined') {
-        infos.pageIndex = 0;
-    }
-    var options = {
-        host: infos.sites[infos.pageIndex].url,
-        path: infos.sites[infos.pageIndex].path,
-        port: '80',
-        socksPort: 9050
-    };
-
-    var req = http.request(options, function(response) {
-        callbackHttp(response, function(err, page) {
-            infos.pageIndex++;
-            cb(err, [page, infos]);
-        });
-    });
-
-
-    req.on('socket', function(socket) {
-        socket.setTimeout(10000);
-        socket.on('timeout', function() {
-            req.abort();
-        });
-        socket.setMaxListeners(300);
-    });
-
-    req.on('error', function(e) {
-        console.log('problem with request: ' + e.message);
-        getPageToPromise(infos, cb);
-
-    });
-
-    req.end();
-});
 
 function processOnePage(numero, getInfos, processPageData, cbFinal) {
 
@@ -107,7 +60,7 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
         listParellelCurl[listParellelCurl.length] = function(curlIndex) {
             return function(callback) {
                 processOnePage(curlIndex, getInfosPromise, processPagePromise, function(err, texte) {
-                    callback(null, curlIndex + " " + texte);
+                    callback(null, {index:curlIndex,content:texte});
                 });
             };
         }(curlIndex);
@@ -117,7 +70,7 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
 
 function start(simultaneousCurl, getInfosFunction, processPageFunction, isProxy,cb) {
     return new Promise(function (resolve, reject) {
-
+        //todo
         http  = selectHttpEngine(isProxy);
 
         var curlsFunction = createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction);  
@@ -156,3 +109,52 @@ function selectHttpEngine(isProxy) {
 
 
 module.exports = start;
+
+function callbackHttp(response, cb) {
+    var str = '';
+    response.on('data', function(chunk) {
+        str += chunk;
+    });
+
+    response.on('end', function() {
+        cb(null, str);
+    });
+
+}
+
+var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
+
+    if (typeof infos.pageIndex === 'undefined') {
+        infos.pageIndex = 0;
+    }
+    var options = {
+        host: infos.sites[infos.pageIndex].url,
+        path: infos.sites[infos.pageIndex].path,
+        port: '80',
+        socksPort: 9050
+    };
+
+    var req = http.request(options, function(response) {
+        callbackHttp(response, function(err, page) {
+            infos.pageIndex++;
+            cb(err, [page, infos]);
+        });
+    });
+
+
+    req.on('socket', function(socket) {
+        socket.setTimeout(10000);
+        socket.on('timeout', function() {
+            req.abort();
+        });
+        socket.setMaxListeners(300);
+    });
+
+    req.on('error', function(e) {
+        console.log('problem with request: ' + e.message);
+        getPageToPromise(infos, cb);
+
+    });
+
+    req.end();
+});

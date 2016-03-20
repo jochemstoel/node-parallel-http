@@ -11,7 +11,7 @@ function getInfos(numeroCrawler,cb) {
         }
     }];
 
-    if(nbPageParcouru>10000) {
+    if(nbPageParcouru>200) {
         sites = [] ;
     }
 
