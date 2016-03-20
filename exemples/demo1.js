@@ -21,7 +21,7 @@ function getInfos(numeroCrawler,cb) {
 var begin = new Date().getTime();
 
 
-function traiterPage(page, info, cb) {
+function processPage(page, info, cb) {
     nbPageParcouru++;
     if(nbPageParcouru%200 ==0){
         var time = Date.now()-dateDepart;
@@ -29,7 +29,7 @@ function traiterPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(50,getInfos,traiterPage,false)
+parallelHttp(50,getInfos,processPage,false)
     .then(function(result){
         console.log(result)
     })

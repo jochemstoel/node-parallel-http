@@ -49,11 +49,13 @@ function processAllPages(numero, getInfos, processPageData) {
 }
 
 
-function getPages(infos, getInfos, traiterPageP) {
+function getPages(infos, getInfos, processPageData) {
     return new Promise(function (resolve, reject) {
         getPage(infos)
         .then(function(pageAndInfo) {
-            return traiterPageP(pageAndInfo[0], pageAndInfo[1]);
+            var page = pageAndInfo[0];
+            var info = pageAndInfo[1];
+            return processPageData(page, info);
         })
         .then(function(info) {
             if (info.pageIndex == info.sites.length) {
