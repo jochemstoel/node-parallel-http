@@ -60,10 +60,15 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
         listParellelCurl[listParellelCurl.length] = function(curlIndex) {
             return function(callback) {
                 processOnePage(curlIndex, getInfosPromise, processPagePromise, function(err, texte) {
-                    callback(null, {
-                        index: curlIndex,
-                        content: texte
-                    });
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, {
+                            index: curlIndex,
+                            content: texte
+                        });
+                    }
+
                 });
             };
         }(curlIndex);

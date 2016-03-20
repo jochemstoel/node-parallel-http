@@ -16,20 +16,20 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('beautify', function() {
-  gulp.src('./src/*.js')
+  return gulp.src('./src/*.js')
     .pipe(beautify({indentSize: 2}))
     .pipe(gulp.dest('.'))
 });
 
 gulp.task('minifyjs', function () {
-   gulp.src('./dist/node-parallel-http.js')
+   return gulp.src('./dist/node-parallel-http.js')
     .pipe(renameGulp("node-parallel-http.min.js"))
     .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('build', function () {
-   gulp.src('./src/*.js')
+   return gulp.src('./src/*.js')
     .pipe(concat('node-parallel-http.js'))
     .pipe(gulp.dest('./dist'));
 });

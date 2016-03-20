@@ -2,6 +2,7 @@ var parallelHttp = require('../dist/node-parallel-http.min.js');
 
 var nbPageParcouru = 0;
 var dateDepart = Date.now();
+
 function getInfos(numeroCrawler,cb) {
     var sites = [{
         url: 'www.this-page-intentionally-left-blank.org',
@@ -38,4 +39,7 @@ function traiterPage(page, info, cb) {
 parallelHttp(50,getInfos,traiterPage,false)
     .then(function(result){
         console.log(result)
+    })
+    .catch(function(err) {
+        console.log("erreur");
     })
