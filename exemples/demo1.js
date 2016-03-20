@@ -10,9 +10,15 @@ function getInfos(numeroCrawler,cb) {
         isValid: function(codeSource) {
               return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);
         }
+    },{
+        url: 'www.this-page-intentionally-left-blank.org',
+        path: '/',
+        isValid: function(codeSource) {
+              return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);
+        }
     }];
 
-    if(nbPageParcouru>200) {
+    if(nbPageParcouru>1000) {
         sites = [] ;
     }
 
@@ -30,7 +36,7 @@ var begin = new Date().getTime();
 
 function traiterPage(page, info, cb) {
     nbPageParcouru++;
-    if(nbPageParcouru%100 ==0){
+    if(nbPageParcouru%200 ==0){
         var time = Date.now()-dateDepart;
         console.log(Math.round((nbPageParcouru/time)*1000)+" req / s");
     }

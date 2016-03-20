@@ -3,26 +3,32 @@ var Promise = require("promise");
 var http;
 
 
+function checkInfos(infos) {
+    return new Promise(function (resolve, reject) {
+        if(!infos) {
+                 reject("no info");
+             }else if(!infos.sites){
+                reject("no site in info");
+            }
+        resolve(infos);
+    });
+}
 
 function processOnePage(numero, getInfos, processPageData) {
 
     return new Promise(function (resolve, reject) {
        getInfos(numero)
+       .then(checkInfos)
        .then(Promise.denodeify(function(infos, cbFinall) {
-            if(!infos) {
-                 reject("no info");
-             }else if(!infos.sites){
-                reject("no site in info");
-            }
             if (infos.sites.length === 0) {
                 resolve("Finish");
             } else {
                 traiterInfo(infos, getInfos, processPageData, cbFinall);
             }
         }))
-       .then(function() {
-        processOnePage(numero, getInfos, processPageData).
-        then(function(result){
+   .then(function() {
+        processOnePage(numero, getInfos, processPageData)
+        .then(function(result){
             resolve(result);
         });
 
@@ -36,8 +42,7 @@ function processOnePage(numero, getInfos, processPageData) {
 
 
 function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
-
-
+   
     getPage(infos)
     .then(Promise.denodeify(function(pageAndInfo, cb1) {
         var info = pageAndInfo[1];

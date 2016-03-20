@@ -3,17 +3,23 @@ var Promise = require("promise");
 var http;
 
 
+function checkInfos(infos) {
+    return new Promise(function(resolve, reject) {
+        if (!infos) {
+            reject("no info");
+        } else if (!infos.sites) {
+            reject("no site in info");
+        }
+        resolve(infos);
+    });
+}
 
 function processOnePage(numero, getInfos, processPageData) {
 
     return new Promise(function(resolve, reject) {
         getInfos(numero)
+            .then(checkInfos)
             .then(Promise.denodeify(function(infos, cbFinall) {
-                if (!infos) {
-                    reject("no info");
-                } else if (!infos.sites) {
-                    reject("no site in info");
-                }
                 if (infos.sites.length === 0) {
                     resolve("Finish");
                 } else {
@@ -21,10 +27,10 @@ function processOnePage(numero, getInfos, processPageData) {
                 }
             }))
             .then(function() {
-                processOnePage(numero, getInfos, processPageData).
-                then(function(result) {
-                    resolve(result);
-                });
+                processOnePage(numero, getInfos, processPageData)
+                    .then(function(result) {
+                        resolve(result);
+                    });
 
             }).catch(function(err) {
                 console.log("Err: " + err);
@@ -36,7 +42,6 @@ function processOnePage(numero, getInfos, processPageData) {
 
 
 function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
-
 
     getPage(infos)
         .then(Promise.denodeify(function(pageAndInfo, cb1) {
