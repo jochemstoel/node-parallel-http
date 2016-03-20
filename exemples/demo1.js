@@ -4,26 +4,13 @@ var nbPageParcouru = 0;
 var dateDepart = Date.now();
 
 function getInfos(numeroCrawler,cb) {
-    var sites = [{
-        url: 'www.this-page-intentionally-left-blank.org',
-        path: '/',
-        isValid: function(codeSource) {
-              return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);
-        }
-    },{
-        url: 'www.this-page-intentionally-left-blank.org',
-        path: '/',
-        isValid: function(codeSource) {
-              return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);
-        }
-    }];
+   
 
     if(nbPageParcouru>1000) {
         sites = [] ;
     }
 
     var infos = {
-        sites: sites,
         pageIndex: 0,
         numeroCrawler : numeroCrawler
     };

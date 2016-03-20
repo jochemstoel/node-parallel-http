@@ -6,51 +6,62 @@ var http;
 function checkInfos(infos) {
     return new Promise(function (resolve, reject) {
         if(!infos) {
-         reject("no info");
-     }else if(!infos.sites){
-        reject("no site in info");
+           reject("Function getInfos need to return infos");
+       }
+
+       if(!infos.sites){
+        infos.sites = [];
     }
     resolve(infos);
 });
 }
 
-function processOnePage(numero, getInfos, processPageData) {
+function processAllPages(numero, getInfos, processPageData) {
 
     return new Promise(function (resolve, reject) {
-       getInfos(numero)
-       .then(checkInfos)
-       .then(function(infos) {
-        if (infos.sites.length === 0) {
-            resolve("Finish");
-        } else {
-            traiterInfo(infos, getInfos, processPageData)
-            .then(function() {
-                return processOnePage(numero, getInfos, processPageData);
-            })
-            .then(function(result){
-                resolve(result);
-            })
+
+        if(!getInfos){
+            reject("processAllPages : missing getInfos");
+            return;
         }
-    }).catch(function(err){
-        console.log("Err: " + err);
-        reject("Err: " + err,null);
+        getInfos(numero)
+        .then(checkInfos)
+        .then(function(infos) {
+            if (infos.sites.length === 0) {
+                resolve("Finish");
+            } else {
+                getPages(infos, getInfos, processPageData)
+                .then(function() {
+                    return processAllPages(numero, getInfos, processPageData);
+                })
+                .then(function(result){
+                    resolve(result);
+                })
+                .catch(function(err){
+                    reject(err);
+                })
+            }
+        }).catch(function(err){
+            reject(err);
+        });
     });
-});
 
 }
 
 
-function traiterInfo(infos, getInfos, traiterPageP) {
+function getPages(infos, getInfos, processPageData) {
     return new Promise(function (resolve, reject) {
         getPage(infos)
         .then(function(pageAndInfo) {
-            return traiterPageP(pageAndInfo[0], pageAndInfo[1]);
+            var page = pageAndInfo[0];
+            var info = pageAndInfo[1];
+            return processPageData(page, info);
         })
         .then(function(info) {
             if (info.pageIndex == info.sites.length) {
                 resolve(null, null);
             } else {
-                traiterInfo(info, getInfos, traiterPageP)
+                getPages(info, getInfos, traiterPageP)
                 .then(function(result){
                     resolve(null,result);
                 });
@@ -68,10 +79,10 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
     for (var curlIndex = 0 ; curlIndex < simultaneousCurl ; curlIndex++) {
         listParellelCurl[listParellelCurl.length] = function(curlIndex) {
             return function(callback) {
-                processOnePage(curlIndex, getInfosPromise, processPagePromise)
+                processAllPages(curlIndex, getInfosPromise, processPagePromise)
                 .then(function(result){
-                 callback(null, {index:curlIndex,content:result});
-             })
+                   callback(null, {index:curlIndex,content:result});
+               })
                 .catch(function(err){
                     callback(err,null); 
                 });

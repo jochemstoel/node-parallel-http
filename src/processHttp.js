@@ -12,7 +12,7 @@ function callbackHttp(response, cb) {
 }
 
 var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
-
+    
     if (typeof infos.pageIndex === 'undefined') {
         infos.pageIndex = 0;
     }
@@ -45,7 +45,7 @@ var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
     });
 
     req.on('error', function(e) {
-        console.log('problem with request: ' + e.message);
+        //todo limit
         getPageToPromise(infos, cb);
 
     });
