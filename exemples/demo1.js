@@ -42,4 +42,5 @@ parallelHttp(50,getInfos,traiterPage,false)
     })
     .catch(function(err) {
         console.log("erreur");
+        console.log(err);
     })

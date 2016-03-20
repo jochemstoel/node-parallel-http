@@ -4,28 +4,34 @@ var http;
 
 
 
-function processOnePage(numero, getInfos, processPageData, cbFinal) {
+function processOnePage(numero, getInfos, processPageData) {
 
-    getInfos(numero)
-        .then(Promise.denodeify(function(infos, cbFinall) {
-            if (!infos) {
-                throw new Error("no info");
-            } else if (!infos.sites) {
-                throw new Error("no site in info")
-            }
-            if (infos.sites.length === 0) {
-                cbFinal(null, "Finish");
-            } else {
-                traiterInfo(infos, getInfos, processPageData, cbFinall);
-            }
-        }))
-        .then(function() {
-            processOnePage(numero, getInfos, processPageData, cbFinal);
+    return new Promise(function(resolve, reject) {
+        getInfos(numero)
+            .then(Promise.denodeify(function(infos, cbFinall) {
+                if (!infos) {
+                    reject("no info");
+                } else if (!infos.sites) {
+                    reject("no site in info");
+                }
+                if (infos.sites.length === 0) {
+                    resolve("Finish");
+                } else {
+                    traiterInfo(infos, getInfos, processPageData, cbFinall);
+                }
+            }))
+            .then(function() {
+                processOnePage(numero, getInfos, processPageData).
+                then(function(result) {
+                    resolve(result);
+                });
 
-        }).catch(function(err) {
-            console.log("Err: " + err);
-            cbFinal("Err: " + err, null);
-        });
+            }).catch(function(err) {
+                console.log("Err: " + err);
+                reject("Err: " + err, null);
+            });
+    });
+
 }
 
 
@@ -59,18 +65,19 @@ function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageF
     for (var curlIndex = 0; curlIndex < simultaneousCurl; curlIndex++) {
         listParellelCurl[listParellelCurl.length] = function(curlIndex) {
             return function(callback) {
-                processOnePage(curlIndex, getInfosPromise, processPagePromise, function(err, texte) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
+                processOnePage(curlIndex, getInfosPromise, processPagePromise)
+                    .then(function(result) {
                         callback(null, {
                             index: curlIndex,
-                            content: texte
+                            content: result
                         });
-                    }
+                    })
+                    .catch(function(err) {
+                        callback(err, null);
+                    });
 
-                });
             };
+
         }(curlIndex);
     }
     return listParellelCurl;
