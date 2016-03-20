@@ -26,7 +26,12 @@ var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
     var req = http.request(options, function(response) {
         callbackHttp(response, function(err, page) {
             infos.pageIndex++;
-            cb(err, [page, infos]);
+            if (!infos.sites[infos.pageIndex - 1].isValid(page)) {
+                infos.pageIndex--;
+                getPage(infos, cb);
+            }else{
+                cb(err, [page, infos]);
+            }
         });
     });
 

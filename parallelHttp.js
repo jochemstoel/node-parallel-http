@@ -19,19 +19,18 @@ function processOnePage(numero, getInfos, processPageData) {
     return new Promise(function(resolve, reject) {
         getInfos(numero)
             .then(checkInfos)
-            .then(Promise.denodeify(function(infos, cbFinall) {
+            .then(function(infos) {
                 if (infos.sites.length === 0) {
                     resolve("Finish");
                 } else {
-                    traiterInfo(infos, getInfos, processPageData, cbFinall);
+                    traiterInfo(infos, getInfos, processPageData)
+                        .then(function() {
+                            return processOnePage(numero, getInfos, processPageData);
+                        })
+                        .then(function(result) {
+                            resolve(result);
+                        })
                 }
-            }))
-            .then(function() {
-                processOnePage(numero, getInfos, processPageData)
-                    .then(function(result) {
-                        resolve(result);
-                    });
-
             }).catch(function(err) {
                 console.log("Err: " + err);
                 reject("Err: " + err, null);
@@ -41,25 +40,24 @@ function processOnePage(numero, getInfos, processPageData) {
 }
 
 
-function traiterInfo(infos, getInfos, traiterPageP, cbFinal) {
+function traiterInfo(infos, getInfos, traiterPageP) {
+    return new Promise(function(resolve, reject) {
+        getPage(infos)
+            .then(function(pageAndInfo) {
+                return traiterPageP(pageAndInfo[0], pageAndInfo[1]);
+            })
+            .then(function(info) {
+                if (info.pageIndex == info.sites.length) {
+                    resolve(null, null);
+                } else {
+                    traiterInfo(info, getInfos, traiterPageP)
+                        .then(function(result) {
+                            resolve(null, result);
+                        });
+                }
+            });
+    });
 
-    getPage(infos)
-        .then(Promise.denodeify(function(pageAndInfo, cb1) {
-            var info = pageAndInfo[1];
-            if (!info.sites[info.pageIndex - 1].isValid(pageAndInfo[0])) {
-                info.pageIndex--;
-                traiterInfo(info, getInfos, traiterPageP, cbFinal);
-            } else {
-                traiterPageP(pageAndInfo[0], pageAndInfo[1], cb1);
-            }
-        }))
-        .then(function(info, cb2) {
-            if (info.pageIndex == info.sites.length) {
-                cbFinal(null, null);
-            } else {
-                traiterInfo(info, getInfos, traiterPageP, cbFinal);
-            }
-        });
 }
 
 function createListParallelCurl(simultaneousCurl, getInfosFunction, processPageFunction) {
