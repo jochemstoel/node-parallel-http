@@ -43,7 +43,7 @@ function processPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(5,getInfos,processPage,false)
+parallelHttp(50,getInfos,processPage,false)
     .then(function(result){
         console.log(result)
     })

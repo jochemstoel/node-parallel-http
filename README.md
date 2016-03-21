@@ -15,6 +15,8 @@ Some introduction [with link](http://google.fr).
 
 ####Demos
 
+- [Normal Utilisation]()
+- [BruteForce]()
 - [Use TOR Network]()
 
 
