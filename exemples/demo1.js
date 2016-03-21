@@ -5,12 +5,26 @@ var dateDepart = Date.now();
 
 function getInfos(numeroCrawler,cb) {
    
+   var sites = [{        
+         url: 'www.this-page-intentionally-left-blank.org',        
+           path: '/',        
+          isValid: function(codeSource) {       
+               return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);      
+           }     
+        },{       
+           url: 'www.this-page-intentionally-left-blank.org',        
+          path: '/',        
+            isValid: function(codeSource) {       
+                return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);      
+    }     
+    }];
 
     if(nbPageParcouru>1000) {
         sites = [] ;
     }
 
     var infos = {
+        sites:sites,
         pageIndex: 0,
         numeroCrawler : numeroCrawler
     };
@@ -29,7 +43,7 @@ function processPage(page, info, cb) {
     }
     cb(null, info);
 }
-parallelHttp(50,getInfos,processPage,false)
+parallelHttp(5,getInfos,processPage,false)
     .then(function(result){
         console.log(result)
     })

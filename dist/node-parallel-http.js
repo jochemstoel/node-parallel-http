@@ -27,9 +27,12 @@ function processAllPages(numero, getInfos, processPageData) {
         getInfos(numero)
         .then(checkInfos)
         .then(function(infos) {
+
             if (infos.sites.length === 0) {
                 resolve("Finish");
+
             } else {
+
                 getPages(infos, getInfos, processPageData)
                 .then(function() {
                     return processAllPages(numero, getInfos, processPageData);
@@ -61,7 +64,7 @@ function getPages(infos, getInfos, processPageData) {
             if (info.pageIndex == info.sites.length) {
                 resolve(null, null);
             } else {
-                getPages(info, getInfos, traiterPageP)
+                getPages(info, getInfos, processPageData)
                 .then(function(result){
                     resolve(null,result);
                 });
