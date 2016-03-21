@@ -1,6 +1,6 @@
 {
   "name": "node-parallel-http",
-  "version": "v0.1.1",
+  "version": "v1.0.1",
   "description": "Node-parallel-http",
   "main": "dist/node-parallel-http.min.js",
   "scripts": {

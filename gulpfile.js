@@ -34,6 +34,12 @@ gulp.task('build', function () {
     .pipe(gulp.dest('./dist'));
 });
 
+
+
 gulp.task('default',
 	 runSequence('beautify','build','minifyjs')
 );
+
+gulp.task('test', function () {
+   
+});
