@@ -1,14 +1,14 @@
 Node-Parallel-HTTP
 ==================
-Node-Parallel-HTTP is a Javascript for make  **lot of different request simultaneously**. It can use HTTP, HTTPS. It works with socks5 proxy for, exemple, use **TOR NETWORK**.  You can use it for retrieve lot of data on internet. Or for realize some **bruteforce**.
+Node-Parallel-HTTP is a JavaScript lib for make  **lot of different request simultaneously**. It can use HTTP, HTTPS. It works with socks5 proxy for, example, use **TOR NETWORK**.  You can use it for retrieving lots of data on the internet. Or for realizes some **bruteforce**.
 
 ![exemple node parallel http](http://img4.hostingpics.net/pics/34195545t.gif)
 
 
 ![enter image description here](http://img4.hostingpics.net/pics/29390369p.gif)
 
-#It easy to uses !
-You can easly customise which website you want to visit and how to process these pages !
+#It's easy to use !
+You can easily customize which website you want to visit and how to process these pages !
 
 #Process
 
