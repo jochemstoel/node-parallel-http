@@ -1,4 +1,3 @@
-
 function callbackHttp(response, cb) {
     var str = '';
     response.on('data', function(chunk) {
@@ -12,7 +11,7 @@ function callbackHttp(response, cb) {
 }
 
 var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
-    
+
     if (typeof infos.pageIndex === 'undefined') {
         infos.pageIndex = 0;
     }
@@ -29,7 +28,7 @@ var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
             if (!infos.sites[infos.pageIndex - 1].isValid(page)) {
                 infos.pageIndex--;
                 getPage(infos, cb);
-            }else{
+            } else {
                 cb(err, [page, infos]);
             }
         });

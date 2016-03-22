@@ -18,7 +18,7 @@ gulp.task('jshint', function() {
 gulp.task('beautify', function() {
   return gulp.src('./src/*.js')
     .pipe(beautify({indentSize: 2}))
-    .pipe(gulp.dest('.'))
+    .pipe(gulp.dest('./src/'))
 });
 
 gulp.task('minifyjs', function () {
