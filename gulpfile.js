@@ -7,7 +7,7 @@ var renameGulp  = require("gulp-rename");
 var runSequence = require('run-sequence');
 var browserify = require('browserify');
 var concat = require('gulp-concat');
-
+var mocha = require('gulp-mocha');
 
 gulp.task('jshint', function() {
   return gulp.src('./src/*.js')
@@ -35,11 +35,14 @@ gulp.task('build', function () {
 });
 
 
-
-gulp.task('default',
-	 runSequence('beautify','build','minifyjs')
+gulp.task('default',function(callback){
+  runSequence('beautify','build','minifyjs',callback)
+}
 );
 
+
 gulp.task('test', function () {
-   
+   return gulp.src('test/test.js', {read: false})
+        .pipe(mocha());
 });
+

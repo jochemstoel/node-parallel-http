@@ -10,11 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "async": "^1.5.2",
+    "gulp-mocha": "^2.2.0",
     "promise": "^7.1.1",
     "socks5-http-client": "^1.0.2"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
+    "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-beautify": "^2.0.0",
     "gulp-concat": "^2.6.0",
