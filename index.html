@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Node-parallel-http by lucasBertola</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Node-parallel-http</h1>
+      <h2 class="project-tagline">Async parallel HTTP /  HTTPS requests in NodeJs.  HTTP / HTTPS / SOCKS5 / TOR NETWORK / BRUTEFORCE</h2>
+      <a href="https://github.com/lucasBertola/node-parallel-http" class="btn">View on GitHub</a>
+      <a href="https://github.com/lucasBertola/node-parallel-http/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/lucasBertola/node-parallel-http/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="node-parallel-http-" class="anchor" href="#node-parallel-http-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node-Parallel-HTTP <a href="https://github.com/lucasBertola/node-parallel-http"><img src="https://api.travis-ci.org/lucasBertola/node-parallel-http.svg?branch=master" alt="Build Status"></a>
+</h1>
+
+<p>Node-Parallel-HTTP is a JavaScript lib for make  <strong>lot of different request simultaneously</strong>. It can use HTTP, HTTPS. It works with socks5 proxy for, example, use <strong>TOR NETWORK</strong>.  You can use it for retrieving lots of data on the internet. Or for realizes some <strong>bruteforce</strong>.</p>
+
+<p><img src="http://zupimages.net/up/16/12/xb0a.gif" alt=""></p>
+
+<p><img src="http://zupimages.net/up/16/12/u3qv.gif" alt=""></p>
+
+<h1>
+<a id="its-easy-to-use-" class="anchor" href="#its-easy-to-use-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>It's easy to use !</h1>
+
+<p>You can easily customize which website you want to visit and how to process these pages !</p>
+
+<h1>
+<a id="process" class="anchor" href="#process" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Process</h1>
+
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h2>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> parallelHttp <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>node-parallel-http<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">function</span> <span class="pl-en">getInfos</span>(<span class="pl-smi">numeroCrawler</span>,<span class="pl-smi">cb</span>) {
+
+   <span class="pl-k">var</span> sites <span class="pl-k">=</span> [{        
+         url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>www.this-page-intentionally-left-blank.org<span class="pl-pds">'</span></span>,        
+           path<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/<span class="pl-pds">'</span></span>,        
+          <span class="pl-en">isValid</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">codeSource</span>) {       
+               <span class="pl-k">return</span> (<span class="pl-smi">codeSource</span>.<span class="pl-c1">indexOf</span>(<span class="pl-s"><span class="pl-pds">"</span>This Page Intentionally Left Blank<span class="pl-pds">"</span></span>) <span class="pl-k">&gt;=</span><span class="pl-c1">0</span>);      
+           }     
+    }];
+
+    <span class="pl-k">var</span> infos <span class="pl-k">=</span> {
+        sites<span class="pl-k">:</span>sites,
+        pageIndex<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        numeroCrawler <span class="pl-k">:</span> numeroCrawler
+    };
+
+    <span class="pl-en">cb</span>(<span class="pl-c1">null</span>, infos);
+}
+
+<span class="pl-k">function</span> <span class="pl-en">processPage</span>(<span class="pl-smi">page</span>, <span class="pl-smi">info</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(page); <span class="pl-c">//display page</span>
+    <span class="pl-en">cb</span>(<span class="pl-c1">null</span>, info);
+}
+<span class="pl-en">parallelHttp</span>(<span class="pl-c1">50</span>,getInfos,processPage,<span class="pl-c1">false</span>)
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">result</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>finish<span class="pl-pds">"</span></span>)
+    })</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>You will can install <strong>node-parallel-http</strong> with <a href="https://www.npmjs.com/package/node-parallel-http">npm</a>:</p>
+
+<div class="highlight highlight-source-dosbatch"><pre>npm install node-parallel-http --save</pre></div>
+
+<p>Now you can start to have parallel request .</p>
+
+<h3>
+<a id="gulp-tasks" class="anchor" href="#gulp-tasks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Gulp Tasks</h3>
+
+<ul>
+<li>
+<strong>gulp</strong>:  runs all the tests and builds the minified and unminified bundles into <code>/dist</code>.</li>
+<li>
+<strong>gulp build</strong>:  builds the bundle.</li>
+<li>
+<strong>gulp build</strong>:  builds the bundle.</li>
+</ul>
+
+<h3>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h3>
+
+<h4>
+<a id="simple-exemple" class="anchor" href="#simple-exemple" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple exemple</h4>
+
+<p>This is a simple exemple</p>
+
+<h4>
+<a id="simple-bruteforce" class="anchor" href="#simple-bruteforce" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple bruteForce</h4>
+
+<p>This is a simple bruteForce</p>
+
+<h4>
+<a id="simple-use-of-tornetwork" class="anchor" href="#simple-use-of-tornetwork" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple use of TorNetwork</h4>
+
+<p>This is a simple use of TorNework</p>
+
+<h2>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute</h2>
+
+<p><strong>Node-Parallel-HTTP</strong> is an Open Source project that started in Lyon, French. Anybody in the world is welcome to contribute to the development of the project.</p>
+
+<p>If you want to contribute feel free to send PR's, just make sure to run the default <strong>gulp</strong> task before submiting it. This way you'll run all the test specs and build the web distribution files.</p>
+
+<p>&lt;3</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/lucasBertola/node-parallel-http">Node-parallel-http</a> is maintained by <a href="https://github.com/lucasBertola">lucasBertola</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
