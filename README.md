@@ -1,4 +1,4 @@
-Node-Parallel-HTTP
+Node-Parallel-HTTP [![Build Status](https://api.travis-ci.org/lucasBertola/node-parallel-http.svg?branch=master)](https://github.com/lucasBertola/node-parallel-http)
 ==================
 Node-Parallel-HTTP is a JavaScript lib for make  **lot of different request simultaneously**. It can use HTTP, HTTPS. It works with socks5 proxy for, example, use **TOR NETWORK**.  You can use it for retrieving lots of data on the internet. Or for realizes some **bruteforce**.
 
