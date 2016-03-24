@@ -41,7 +41,7 @@ gulp.task('default',function(callback){
 );
 
 
-gulp.task('test', function () {
+gulp.task('test',['default'], function () {
    return gulp.src('test/test.js', {read: false})
         .pipe(mocha());
 });
