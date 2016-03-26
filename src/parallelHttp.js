@@ -8,7 +8,9 @@ function checkInfos(infos) {
         if (!infos) {
             reject("Function getInfos need to return infos");
         }
-
+        if (typeof infos.pageIndex === 'undefined') {
+            infos.pageIndex = 0;
+        }
         if (!infos.sites) {
             infos.sites = [];
         }

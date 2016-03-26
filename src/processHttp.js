@@ -12,9 +12,6 @@ function callbackHttp(response, cb) {
 
 var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
 
-    if (typeof infos.pageIndex === 'undefined') {
-        infos.pageIndex = 0;
-    }
     var options = {
         host: infos.sites[infos.pageIndex].url,
         path: infos.sites[infos.pageIndex].path,

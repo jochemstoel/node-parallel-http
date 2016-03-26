@@ -1,0 +1,164 @@
+Lucas :
+
+Select the correct definition of Automation Account Assets : Credentials?
+
+    Store username and password to connect to Azure
+
+
+- Choose appropriate statement for private cloud ?
+
+    Managed and controlled by the organization
+
+            
+- Choose appropriate statements for public cloud :
+
+    Managed and controlled by a third party
+
+    Large resource requirements enable economies of scale
+
+
+
+- Which 3 commands can be used to create your own Windows-Bsed images from on-premises VM and from Azure VM ?
+
+    Add-AzureVHD
+
+     Add-AzureVMImage
+
+    Save-AzureVMImage
+
+
+- Software that runs within a virtual machine:
+
+    VM Extensions
+
+
+- A protection group contains a number of protected virtual machines that share the same protection settings.
+
+    True
+
+        
+A _____ cloud is dedicated to a single organization
+        private
+        
+What is true about Storage Accounts ?
+        Reside in a single account
+        limit to 500Tb
+        can be access outside
+        
+A _____ cloud uses resources from multiple clouds
+        hybrid
+Denis :
+
+CACHING can be configured to prevent the need for a user to be re-authenticated using MFA too frequently.
+
+Azure Backup : What are limitation and prerequistites ?
+- A maximum of 366 recovery points (backups) may be stored for a maximum of 100 years
+- Can schedule a maximum of three backups a day
+- To enable encryption, a passphrase must be created
+- Free space of 10 to 15 percent of the data being backed up is required
+
+What is true about Azure Files ?
+•Can connect from multiple virtual machines simultaneously
+•File shares can only be accessed by VMs in the same region as the storage account
+•SMB 2.1 file shares within Azure
+
+Azure Site Recovery is a method to migrate to Azure ?
+- False
+
+creates the required Windows Server AD service accounts with appropriate permissions to carry out synchronization.
+- AAD Connect
+
+What is true about Virtual Machine ?
+- Standard VMs provide additional functionality 
+- A virtual machine can be created from an existing Azure image, custom created images, or from virtual disks
+
+- Which RFC define IP Address ranges that can be used in Azure ?
+
+    RFC 1918
+
+
+Which IaaS provider is described in the following description ? First mover, 2006 One of the marker leaders Offers IaaS ans PaaS
+- Amazon EC2
+
+Which IaaS provider is described in the following description ? New in 2010 Standards-based Used by Rackspace, HP, IBM
+- OpenStack Compute
+
+Citi:
+
+- Reorder the process of Changing VM Size
+
+    Export-AzureVM
+
+    Edit XML file with new role size
+
+    Delete original VM, leaving the disks from Azure
+
+    Import-AzureVM
+
+
+- What are options for configuring Web Apps Scaling ?
+
+    Manually
+
+    Automatic by CPU percentage
+
+    Schedule
+
+
+- _____ creates the required Windows Server AD service accounts with appropriate permissions to carry out synchronization.
+
+    AAD Connect
+
+
+- Which failover type is described by the following statement ? When the source site is unavailable. The recovery plan will run to completion.
+
+    Unplanned failover
+
+
+- Reorder the VPN troubleshooting steps.
+
+    Start-AzureVNetGatewayDiagnostics
+
+    Attempt to connect to VPN
+
+    Stop-AzureVnetGatewayDiagnostics
+
+    Get-AzureVNetGatewayDiagnostics
+
+
+- To ensure charges stop, VM must be shut down from the portal.
+
+    True
+
+
+- Active Directory in Azure : To provide redundancy and reduce latency to services hosted on Azure you have to implement _______.
+
+     Windows server AD in Azure VM
+
+
+- What is true about Azure Virtual Networks ?
+
+    Last address is for broadcast
+
+    First address is for network gateway
+
+    Smallest subnet is /29
+
+    Largest subnet is /8
+
+
+- Select the correct definition of Automation Account Assets : Connections
+
+    Connect to Azure using management certificates
+
+
+- _______ links two (or more) networks
+
+    Site-to-Site VPN
+
+
+- Which technology is described by the following statements ? Users connect to the remote server using RDP and are presented only with the windows containing the applications. Any child windows are automatically displayed to users giving the impression the application is actually running locally
+
+    RemoteApp
+
+

@@ -8,7 +8,9 @@ function checkInfos(infos) {
         if (!infos) {
             reject("Function getInfos need to return infos");
         }
-
+        if (typeof infos.pageIndex === 'undefined') {
+            infos.pageIndex = 0;
+        }
         if (!infos.sites) {
             infos.sites = [];
         }
@@ -155,9 +157,6 @@ function callbackHttp(response, cb) {
 
 var getPage = Promise.denodeify(function getPageToPromise(infos, cb) {
 
-    if (typeof infos.pageIndex === 'undefined') {
-        infos.pageIndex = 0;
-    }
     var options = {
         host: infos.sites[infos.pageIndex].url,
         path: infos.sites[infos.pageIndex].path,
