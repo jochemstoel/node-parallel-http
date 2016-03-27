@@ -56,11 +56,15 @@ Now you can start to have parallel request .
 
 - **gulp**:  runs all the tests and builds the minified and unminified bundles into `/dist`.
 - **gulp build**:  builds the bundle.
-- **gulp build**:  builds the bundle.
+- **gulp test**:   runs all the tests.
 
 ###Demo
 
-####Simple exemple
+####Simple exemple 
+
+This is a simple exemple
+
+####Simple exemple multi-page
 
 This is a simple exemple
 
