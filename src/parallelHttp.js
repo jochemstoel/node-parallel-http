@@ -13,7 +13,20 @@ function checkInfos(infos) {
         }
         if (!infos.sites) {
             infos.sites = [];
+        } else {
+            for (var siteIndex = 0; siteIndex < infos.sites.length; siteIndex++) {
+                if (!infos.sites[siteIndex].path) {
+                    infos.sites[siteIndex].path = "";
+                }
+                if (!infos.sites[siteIndex].isValid) {
+                    infos.sites[siteIndex].isValid = function() {
+                        return true;
+                    }
+                }
+            }
         }
+
+
         resolve(infos);
     });
 }

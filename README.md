@@ -19,16 +19,11 @@ var parallelHttp = require('node-parallel-http');
 function getInfos(numeroCrawler,cb) {
    
    var sites = [{        
-         url: 'www.this-page-intentionally-left-blank.org',        
-           path: '/',        
-          isValid: function(codeSource) {       
-               return (codeSource.indexOf("This Page Intentionally Left Blank") >=0);      
-           }     
-    }];
+         url: 'www.this-page-intentionally-left-blank.org',  
+        }];
 
     var infos = {
         sites:sites,
-        pageIndex: 0,
         numeroCrawler : numeroCrawler
     };
 
@@ -36,13 +31,14 @@ function getInfos(numeroCrawler,cb) {
 }
 
 function processPage(page, info, cb) {
-    console.log(page); //display page
+    console.log(page);
     cb(null, info);
 }
+
 parallelHttp(50,getInfos,processPage,false)
     .then(function(result){
-        console.log("finish")
-    })
+        console.log(result)
+    });
 ```
 
 
