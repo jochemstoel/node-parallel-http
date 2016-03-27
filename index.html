@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="node-parallel-http-" class="anchor" href="#node-parallel-http-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node-Parallel-HTTP <a href="https://github.com/lucasBertola/node-parallel-http"><img src="https://api.travis-ci.org/lucasBertola/node-parallel-http.svg?branch=master" alt="Build Status"></a>
+<a id="node-parallel-http-" class="anchor" href="#node-parallel-http-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node-Parallel-HTTP <a href="https://travis-ci.org/lucasBertola/node-parallel-http"><img src="https://api.travis-ci.org/lucasBertola/node-parallel-http.svg?branch=master" alt="Build Status"></a>
 </h1>
 
 <p>Node-Parallel-HTTP is a JavaScript lib for make  <strong>lot of different request simultaneously</strong>. It can use HTTP, HTTPS. It works with socks5 proxy for, example, use <strong>TOR NETWORK</strong>.  You can use it for retrieving lots of data on the internet. Or for realizes some <strong>bruteforce</strong>.</p>
@@ -45,16 +45,11 @@
 <span class="pl-k">function</span> <span class="pl-en">getInfos</span>(<span class="pl-smi">numeroCrawler</span>,<span class="pl-smi">cb</span>) {
 
    <span class="pl-k">var</span> sites <span class="pl-k">=</span> [{        
-         url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>www.this-page-intentionally-left-blank.org<span class="pl-pds">'</span></span>,        
-           path<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/<span class="pl-pds">'</span></span>,        
-          <span class="pl-en">isValid</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">codeSource</span>) {       
-               <span class="pl-k">return</span> (<span class="pl-smi">codeSource</span>.<span class="pl-c1">indexOf</span>(<span class="pl-s"><span class="pl-pds">"</span>This Page Intentionally Left Blank<span class="pl-pds">"</span></span>) <span class="pl-k">&gt;=</span><span class="pl-c1">0</span>);      
-           }     
-    }];
+         url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>www.this-page-intentionally-left-blank.org<span class="pl-pds">'</span></span>,  
+        }];
 
     <span class="pl-k">var</span> infos <span class="pl-k">=</span> {
         sites<span class="pl-k">:</span>sites,
-        pageIndex<span class="pl-k">:</span> <span class="pl-c1">0</span>,
         numeroCrawler <span class="pl-k">:</span> numeroCrawler
     };
 
@@ -62,13 +57,14 @@
 }
 
 <span class="pl-k">function</span> <span class="pl-en">processPage</span>(<span class="pl-smi">page</span>, <span class="pl-smi">info</span>, <span class="pl-smi">cb</span>) {
-    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(page); <span class="pl-c">//display page</span>
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(page);
     <span class="pl-en">cb</span>(<span class="pl-c1">null</span>, info);
 }
+
 <span class="pl-en">parallelHttp</span>(<span class="pl-c1">50</span>,getInfos,processPage,<span class="pl-c1">false</span>)
     .<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">result</span>){
-        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>finish<span class="pl-pds">"</span></span>)
-    })</pre></div>
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(result)
+    });</pre></div>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
@@ -88,7 +84,7 @@
 <li>
 <strong>gulp build</strong>:  builds the bundle.</li>
 <li>
-<strong>gulp build</strong>:  builds the bundle.</li>
+<strong>gulp test</strong>:   runs all the tests.</li>
 </ul>
 
 <h3>
@@ -96,6 +92,11 @@
 
 <h4>
 <a id="simple-exemple" class="anchor" href="#simple-exemple" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple exemple</h4>
+
+<p>This is a simple exemple</p>
+
+<h4>
+<a id="simple-exemple-multi-page" class="anchor" href="#simple-exemple-multi-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple exemple multi-page</h4>
 
 <p>This is a simple exemple</p>
 
